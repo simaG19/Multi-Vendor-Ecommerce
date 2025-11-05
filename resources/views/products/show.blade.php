@@ -130,10 +130,8 @@
     <!-- Made breadcrumb mobile-friendly -->
     <nav class="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8 animate-fadeInUp overflow-x-auto">
       <a href="/" class="hover:text-orange-600 transition-colors whitespace-nowrap">Home</a>
-      <i class="fas fa-chevron-right text-xs"></i>
-      <a href="/category/food-beverages" class="hover:text-orange-600 transition-colors whitespace-nowrap">Food & Beverages</a>
-      <i class="fas fa-chevron-right text-xs"></i>
-      <span class="text-orange-600 font-medium whitespace-nowrap">Coffee</span>
+     <i class="fas fa-chevron-right text-xs"></i>
+      <span class="text-orange-600 font-medium whitespace-nowrap">Product</span>
     </nav>
 
     <!-- Updated grid layout for better mobile stacking -->
