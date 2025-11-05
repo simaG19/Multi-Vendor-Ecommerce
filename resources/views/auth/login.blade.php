@@ -4,14 +4,14 @@
 
     <!-- Enhanced login form with orange branding and modern ecommerce design -->
     <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-        <!-- Added Nana branding header -->
+        <!-- Added Chaka Shoping branding header -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl mb-4">
                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
                 </svg>
             </div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome to Nana</h2>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome to Chaka Shoping</h2>
             <p class="text-gray-600">Sign in to your account to continue shopping</p>
         </div>
 

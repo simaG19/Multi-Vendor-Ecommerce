@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed - Nana</title>
+    <title>Order Confirmed - Chaka Shoping</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -116,7 +116,7 @@
                     <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-2 rounded-lg">
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">Nana</span>
+                    <span class="text-xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">Chaka Shoping</span>
                 </div>
 
                 <!-- Navigation Links -->
@@ -222,9 +222,9 @@
                     <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-2 rounded-lg">
                         <i class="fas fa-shopping-bag text-white"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">Nana</span>
+                    <span class="text-xl font-bold bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">Chaka Shoping</span>
                 </div>
-                <p class="text-gray-600">&copy; 2024 Nana Marketplace. All rights reserved.</p>
+                <p class="text-gray-600">&copy; 2024 Chaka Shoping Marketplace. All rights reserved.</p>
             </div>
         </div>
     </footer>

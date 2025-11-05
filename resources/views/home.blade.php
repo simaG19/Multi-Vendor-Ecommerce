@@ -4,7 +4,7 @@ html >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nana - Multi Vendor eCommerce</title>
+    <title>Chaka Shoping - Multi Vendor eCommerce</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -256,10 +256,10 @@ html >
                     <div class="flex items-center space-x-2">
                        <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-2 rounded-lg">
-                            <i class="fas fa-shopping-bag text-white text-xl"></i>
-                        </div>
-                        <span class="text-2xl font-bold text-gray-800">Nana</span>
+
+                            <img src="img/logo2.png" style='height: 63px'; width='140px'>
+
+                        {{-- <span class="text-2xl font-bold text-gray-800">Chaka Shoping</span> --}}
                     </a>
                 </div>
 
@@ -1004,7 +1004,7 @@ html >
     <section class="py-16 parallax-bg relative" style="background-image: linear-gradient(135deg, rgba(237, 137, 54, 0.9), rgba(221, 107, 32, 0.9)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=80');">
         <div class="container mx-auto px-6 text-center text-white">
             <div class="max-w-3xl mx-auto">
-                <h3 class="text-4xl font-bold mb-4 animate-bounce-gentle">Join Nana Today!</h3>
+                <h3 class="text-4xl font-bold mb-4 animate-bounce-gentle">Join Chaka Shoping Today!</h3>
                 <p class="text-xl mb-8 opacity-90">Get exclusive deals, early access to sales, and personalized recommendations</p>
 
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center mb-8">
@@ -1037,7 +1037,7 @@ html >
                         <div class="w-8 h-8 bg-gradient-to-br from-golden-500 to-golden-600 rounded-lg flex items-center justify-center">
                             <i class="fas fa-shopping-bag text-white text-sm"></i>
                         </div>
-                        <span class="text-xl font-bold text-white">Nana</span>
+                        <span class="text-xl font-bold text-white">Chaka Shoping</span>
                     </div>
                     <p class="text-sm mb-4">Ethiopia's premier multi-vendor marketplace connecting buyers with trusted local vendors across the country.</p>
                     <div class="flex space-x-3">
@@ -1093,14 +1093,14 @@ html >
                     <div class="mt-6">
                         <h5 class="text-white font-semibold mb-2">Contact</h5>
                         <p class="text-sm">📞 +251-11-123-4567</p>
-                        <p class="text-sm">📧 support@Nana.et</p>
+                        <p class="text-sm">📧 support@Chaka Shoping.et</p>
                         <p class="text-sm">📍 Addis Ababa, Ethiopia</p>
                     </div>
                 </div>
             </div>
 
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-                <p>&copy; 2024 Nana Ethiopia. All rights reserved. | <a href="#" class="hover:text-golden-400">Privacy Policy</a> | <a href="#" class="hover:text-golden-400">Terms of Service</a></p>
+                <p>&copy; 2024 Chaka Shoping Ethiopia. All rights reserved. | <a href="#" class="hover:text-golden-400">Privacy Policy</a> | <a href="#" class="hover:text-golden-400">Terms of Service</a></p>
             </div>
         </div>
     </footer>

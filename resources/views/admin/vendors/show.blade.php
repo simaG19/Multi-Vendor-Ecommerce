@@ -94,7 +94,7 @@
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold gradient-text">Nana Admin</h1>
+                        <h1 class="text-xl font-bold gradient-text">Chaka Shoping Admin</h1>
                         <p class="text-xs text-gray-600">Vendor Management</p>
                     </div>
                 </div>

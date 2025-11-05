@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Nana')</title>
+    <title>@yield('title', 'Chaka Shoping')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Enhanced styling with better colors and animations -->
     <style>
@@ -52,7 +52,7 @@
                             <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                         </svg>
                     </div>
-                    <span class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Nana</span>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Chaka Shoping</span>
                 </div>
 
                  <nav class="bg-white shadow-lg sticky top-0 z-50">
@@ -497,7 +497,7 @@
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                             </svg>
                         </div>
-                        <span class="text-2xl font-bold">Nana</span>
+                        <span class="text-2xl font-bold">Chaka Shoping</span>
                     </div>
                     <p class="text-gray-300 text-sm leading-relaxed">Your trusted marketplace for quality products from verified vendors across Ethiopia.</p>
                 </div>
@@ -534,7 +534,7 @@
 
             <!-- Enhanced footer bottom with better styling -->
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p class="text-gray-300 text-sm">&copy; {{ date('Y') }} Nana Marketplace. All rights reserved.</p>
+                <p class="text-gray-300 text-sm">&copy; {{ date('Y') }} Chaka Shoping Marketplace. All rights reserved.</p>
                 <div class="flex justify-center space-x-6 mt-4">
                     <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
                         <i class="fab fa-facebook-f text-lg"></i>

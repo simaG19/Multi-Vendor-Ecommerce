@@ -16,11 +16,10 @@
                 <!-- Logo -->
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-2 rounded-lg">
-                            <i class="fas fa-shopping-bag text-white text-xl"></i>
-                        </div>
-                        <span class="text-2xl font-bold text-gray-800">Nana</span>
-                    </a>
+
+                            <img src="img/logo2.png" style='height: 63px'; width='140px'>
+
+                        </a>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -429,7 +428,7 @@
                         <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-2 rounded-lg">
                             <i class="fas fa-shopping-bag text-white text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold">Nana</span>
+                        <span class="text-2xl font-bold">Chaka Shoping</span>
                     </div>
                     <p class="text-gray-300 mb-4 max-w-md">
                         Your trusted marketplace for quality products with fast and reliable delivery across Ethiopia.
@@ -478,7 +477,7 @@
 
             <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-300 text-sm">
-                    © 2024 Nana Marketplace. All rights reserved.
+                    © 2024 Chaka Shoping Marketplace. All rights reserved.
                 </p>
                 <div class="flex items-center space-x-4 mt-4 md:mt-0">
                     <span class="text-gray-300 text-sm">We accept:</span>

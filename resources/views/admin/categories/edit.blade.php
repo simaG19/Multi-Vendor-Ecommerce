@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category - Admin - Nana </title>
+    <title>Edit Category - Admin - Chaka Shoping </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -152,7 +152,7 @@
                     <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
-                    <span class="text-2xl font-bold logo-text">Nana  Admin</span>
+                    <span class="text-2xl font-bold logo-text">Chaka Shoping  Admin</span>
                 </div>
 
                 <!-- Navigation Links -->

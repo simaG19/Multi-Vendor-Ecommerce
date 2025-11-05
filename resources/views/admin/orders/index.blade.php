@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Orders - NanaMarketplace</title>
+    <title>Admin Orders - Chaka ShopingMarketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -111,7 +111,7 @@
                     <div class="w-10 h-10 bg-gradient-to-r from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold text-white">Nana Admin</span>
+                    <span class="text-xl font-bold text-white">Chaka Shoping Admin</span>
                 </div>
 
                 <!-- Navigation Links -->

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Vendor Registration - Nana </title>
+    <title>Vendor Registration - Chaka Shoping </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -100,7 +100,7 @@
                         <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM10 18V8l5 4v6h-2v-4a1 1 0 00-1-1H8a1 1 0 00-1 1v4H5v-6l5-4z" clip-rule="evenodd"/>
                     </svg>
                 </div>
-                <span class="text-2xl font-bold text-white">Nana </span>
+                <span class="text-2xl font-bold text-white">Chaka Shoping </span>
             </div>
             <a href="{{ route('login') }}" class="glass-effect px-6 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300">
                 Login
@@ -123,7 +123,7 @@
                 <p class="text-lg mb-2">{{ session('success') }}</p>
                 <div class="bg-white bg-opacity-20 rounded-lg p-4 mt-6">
                     <p class="text-sm font-medium">📋 What happens next?</p>
-                    <p class="text-sm mt-2">Our admin team will review and approve your account within <strong>30 minutes</strong>. Once approved, you can login and start selling on Nana !</p>
+                    <p class="text-sm mt-2">Our admin team will review and approve your account within <strong>30 minutes</strong>. Once approved, you can login and start selling on Chaka Shoping !</p>
                 </div>
                 <a href="{{ route('login') }}" class="inline-block mt-6 px-8 py-3 bg-white bg-opacity-20 rounded-lg hover:bg-opacity-30 transition-all duration-300">
                     Go to Login
@@ -134,7 +134,7 @@
             <div class="glass-effect rounded-2xl p-8 shadow-2xl max-h-[85vh] overflow-auto">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-white mb-2">Become a Vendor</h1>
-                    <p class="text-white text-opacity-80">Join Nana  marketplace and start selling your products</p>
+                    <p class="text-white text-opacity-80">Join Chaka Shoping  marketplace and start selling your products</p>
                 </div>
 
                 <!-- Error Messages -->

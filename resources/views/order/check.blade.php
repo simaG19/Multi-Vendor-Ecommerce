@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Your Order - Nana</title>
+    <title>Check Your Order - Chaka Shoping</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -73,7 +73,7 @@
                     <div class="bg-gradient-to-r from-golden-500 to-orange-500 p-2 rounded-lg">
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
-                    <span class="text-2xl font-bold bg-gradient-to-r from-golden-600 to-orange-600 bg-clip-text text-transparent">Nana</span>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-golden-600 to-orange-600 bg-clip-text text-transparent">Chaka Shoping</span>
                 </div>
 
                 <!-- Desktop Navigation -->

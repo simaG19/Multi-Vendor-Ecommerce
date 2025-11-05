@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Nana - E-commerce Store')</title>
+    <title>@yield('title', 'Chaka Shoping - E-commerce Store')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -40,7 +40,7 @@
                     <div class="bg-white text-golden-600 p-2 rounded">
                         <i class="fas fa-shopping-cart text-xl"></i>
                     </div>
-                    <span class="text-2xl font-bold">Nana</span>
+                    <span class="text-2xl font-bold">Chaka Shoping</span>
                 </div>
 
                 <!-- Search Bar -->
@@ -132,7 +132,7 @@
     <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4">
             <div class="text-center">
-                <p>&copy; 2024 Nana. All rights reserved.</p>
+                <p>&copy; 2024 Chaka Shoping. All rights reserved.</p>
             </div>
         </div>
     </footer>

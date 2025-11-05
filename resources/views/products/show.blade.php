@@ -90,7 +90,7 @@
           <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
             <i class="fas fa-shopping-bag text-white text-sm"></i>
           </div>
-          <span class="text-xl font-bold text-gray-800">Nana</span>
+          <span class="text-xl font-bold text-gray-800">Chaka Shoping</span>
         </div>
 
         <!-- Cart icon with count -->
