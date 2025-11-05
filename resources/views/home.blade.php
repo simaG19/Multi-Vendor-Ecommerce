@@ -341,13 +341,15 @@ html >
                                 <div class="p-3">
                                     <div class="text-xs text-gray-400 uppercase font-medium mb-2">Browse categories</div>
                                     <div class="grid grid-cols-1 gap-2">
-                                        @forelse($categories->take(10) as $cat)
-                                            <a href="{{ url('/products?category='.$cat->id) }}" class="block p-2 rounded hover:bg-gray-50 transition text-sm text-gray-700">
-                                                {{ $cat->name }}
-                                            </a>
-                                        @empty
-                                            <div class="text-sm text-gray-500 p-2">No categories.</div>
-                                        @endforelse
+                                         @foreach($categories as $category)
+                <a href="{{ route('products.index', ['category_id' => $category->id]) }}"
+                   class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors {{ request('category_id') == $category->id ? 'bg-orange-50 border-l-4 border-orange-500' : '' }}">
+                    <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center">
+                        <i class="fas fa-tag text-orange-500 text-sm"></i>
+                    </div>
+                    <span class="text-gray-700 font-medium">{{ $category->name }}</span>
+                </a>
+            @endforeach
                                     </div>
                                     <div class="mt-3 border-t pt-3">
                                         <a href="{{ url('/categories') }}" class="text-sm text-golden-600 hover:underline">View all categories →</a>
