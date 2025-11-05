@@ -28,49 +28,50 @@
                     <a href="{{ route('products.index') }}" class="text-orange-500 font-semibold">Products</a>
 
                     <!-- Vendors dropdown (hover + click) -->
-                    <div class="relative group" x-data>
-                        <button
-                            type="button"
-                            class="text-gray-700 hover:text-golden-600 transition flex items-center gap-2"
-                            data-dropdown-btn="vendors"
-                            aria-expanded="false"
-                        >
-                            Vendors
-                            <svg class="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-                            </svg>
-                        </button>
+                   <div class="relative group" x-data>
+                            <button
+                                type="button"
+                                class="text-gray-700 hover:text-golden-600 transition flex items-center gap-2"
+                                data-dropdown-btn="vendors"
+                                aria-expanded="false"
+                            >
+                                Vendors
+                                <svg class="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd"/>
+                                </svg>
+                            </button>
 
-                        <!-- Panel: appears on hover (group-hover) OR when JS toggles data-open -->
-                        <div
-                            class="origin-top-left absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg ring-1 ring-black/5 opacity-0 scale-95 transform transition-all duration-150 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
-                            data-dropdown="vendors"
-                        >
-                            <div class="p-3">
-                                <div class="text-xs text-gray-400 uppercase font-medium mb-2">Top vendors</div>
+                            <!-- Panel: appears on hover (group-hover) OR when JS toggles data-open -->
+                            <div
+                                class="origin-top-left absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg ring-1 ring-black/5 opacity-0 scale-95 transform transition-all duration-150 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+                                data-dropdown="vendors"
+                            >
+                                <div class="p-3">
+                                    <div class="text-xs text-gray-400 uppercase font-medium mb-2">Top vendors</div>
 
-                                <div class="grid gap-2">
-                                    @forelse($vendors->take(8) as $v)
-                                        <a href="{{ url('/vendors/'.$v->id) }}" class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 transition">
-                                            <img src="{{ optional($v->logo)->path ? Storage::url($v->logo->path) : 'https://via.placeholder.com/48' }}"
-                                                 alt="{{ $v->business_name ?? 'Vendor' }}"
-                                                 class="w-8 h-8 rounded-full object-cover">
-                                            <div class="truncate">
-                                                <div class="text-sm text-gray-800 truncate">{{ $v->business_name ?? ($v->user->name ?? 'Vendor') }}</div>
-                                                <div class="text-xs text-gray-500 truncate">{{ $v->city ?? '' }}</div>
-                                            </div>
-                                        </a>
-                                    @empty
-                                        <div class="text-sm text-gray-500 p-2">No vendors yet.</div>
-                                    @endforelse
-                                </div>
+                                    <div class="grid gap-2">
+                                        @forelse($vendors->take(8) as $v)
+                                            <a href="{{ url('/vendor/'.$v->id) }}" class="flex items-center gap-3 p-2 rounded hover:bg-gray-50 transition">
+                                                <img src="{{ optional($v->logo)->path ? Storage::url($v->logo->path) : 'https://via.placeholder.com/48' }}"
+                                                     alt="{{ $v->business_name ?? 'Vendor' }}"
+                                                     class="w-8 h-8 rounded-full object-cover">
+                                                <div class="truncate">
+                                                    <div class="text-sm text-gray-800 truncate">{{ $v->business_name ?? ($v->user->name ?? 'Vendor') }}</div>
+                                                    <div class="text-xs text-gray-500 truncate">{{ $v->city ?? '' }}</div>
+                                                </div>
+                                            </a>
+                                        @empty
+                                            <div class="text-sm text-gray-500 p-2">No vendors yet.</div>
+                                        @endforelse
+                                    </div>
 
-                                <div class="mt-3 border-t pt-3">
-                                    <a href="{{ url('/vendors') }}" class="text-sm text-golden-600 hover:underline">View all vendors →</a>
+                                    <div class="mt-3 border-t pt-3">
+                                        <a href="{{ url('/vendors') }}" class="text-sm text-golden-600 hover:underline">View all vendors →</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
 
                     <!-- Categories dropdown (hover + click) -->
                     <div class="relative group">
