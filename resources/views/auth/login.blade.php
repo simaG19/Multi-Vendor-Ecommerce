@@ -66,9 +66,7 @@
 
             <!-- Enhanced primary button with orange gradient -->
             <div class="pt-4">
-                <button type="submit"
-                    class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 shadow-lg">
-                   sign in
+                <button type="submit">sign in
                 </button>
             </div>
         </form>
