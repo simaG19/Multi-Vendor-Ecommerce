@@ -213,7 +213,7 @@
                             <p class="text-sm md:text-base mb-3 max-w-md text-white/95">Get your packages delivered quickly and safely across the city — same-day delivery available.</p>
 
                             <div class="flex items-center gap-3">
-                                <a href="{{ route('products.index') }}" class="inline-flex items-center bg-white text-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                                <a href="https://nanaexpresset.com/" class="inline-flex items-center bg-white text-orange-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
                                     <i class="fas fa-paper-plane mr-2"></i> Ship Now!
                                 </a>
 
