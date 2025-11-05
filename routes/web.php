@@ -17,11 +17,11 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 
 // Home page
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 
@@ -45,7 +45,7 @@ Route::get('/order/{order_number}', [OrderController::class, 'publicShow'])->nam
 use App\Http\Controllers\PublicProductController;
 // use App\Http\Controllers\CartController;
 
-Route::get('/', [PublicProductController::class, 'index'])->name('products.index');
+Route::get('/products', [PublicProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [PublicProductController::class, 'show'])->name('products.show');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
