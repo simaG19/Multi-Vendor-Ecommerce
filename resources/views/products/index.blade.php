@@ -66,7 +66,7 @@
                                     </div>
 
                                     <div class="mt-3 border-t pt-3">
-                                        <a href="{{ url('/vendors') }}" class="text-sm text-golden-600 hover:underline">View all vendors →</a>
+                                       <a href="{{ url('/vendor/register') }}" class="text-sm text-golden-600 hover:underline">Register vendor →</a>
                                     </div>
                                 </div>
                             </div>
