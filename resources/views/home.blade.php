@@ -1023,7 +1023,7 @@ html >
                         <i class="fas fa-user-plus mr-2"></i>Create Account
                     </button>
                     <button class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-golden-600 transition">
-                        <i class="fas fa-store mr-2"></i>Become a Vendor
+                       <a href="/vendor/register"> <i class="fas fa-store mr-2"></i>Become a Vendor</a>
                     </button>
                 </div>
             </div>
