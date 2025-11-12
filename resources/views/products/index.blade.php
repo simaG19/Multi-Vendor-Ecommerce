@@ -149,7 +149,7 @@
                     </a>
 
                     <!-- User Menu -->
-                    @auth
+                    {{-- @auth
                         <div class="relative group">
                             <button class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 transition-colors">
                                 <i class="fas fa-user-circle text-xl"></i>
@@ -166,12 +166,12 @@
                                 </div>
                             </div>
                         </div>
-                    @else
+                    @else --}}
                         <a href="{{ route('login') }}" class="text-gray-700 hover:text-orange-500 transition-colors">
                             <i class="fas fa-sign-in-alt text-xl"></i>
                             <span class="hidden md:inline ml-1">Login</span>
                         </a>
-                    @endauth
+                    {{-- @endauth --}}
                 </div>
 
                 <!-- Mobile Navigation -->
