@@ -401,7 +401,7 @@
             </div>
 
             <!-- Mobile User Menu -->
-            @auth
+            {{-- @auth
                 <div class="border-t border-gray-200 pt-2 mt-2">
                     <div class="px-3 py-2 text-sm text-gray-500">{{ Auth::user()->name }}</div>
                     <a href="{{ route('profile.show') }}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">Profile</a>
@@ -411,13 +411,13 @@
                         <button type="submit" class="w-full text-left px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">Logout</button>
                     </form>
                 </div>
-            @else
+            @else --}}
                 <div class="border-t border-gray-200 pt-2 mt-2">
                     <a href="{{ route('login') }}" class="block px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
                         <i class="fas fa-sign-in-alt mr-2"></i>Login
                     </a>
                 </div>
-            @endauth
+            {{-- @endauth --}}
         </div>
     </div>
 
