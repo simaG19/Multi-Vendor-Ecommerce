@@ -695,21 +695,34 @@ html >
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($allProducts as $product)
-                @php
-                    $imgModel = $product->images->first() ?? null;
-                    $imgUrl = $imgModel && isset($imgModel->path) ? Storage::url($imgModel->path) : 'https://via.placeholder.com/400x300?text=No+image';
-                    $discount = $product->discount_percent ?? 0;
-                    $finalPrice = $discount > 0 ? ($product->price - ($product->price * $discount / 100)) : $product->price;
-                    $vendorName = $product->vendor->business_name ?? $product->vendor->name ?? $product->vendor->user->name ?? 'Unknown Vendor';
-                    $rating = $product->rating ?? number_format(4.4 + (rand(0,40)/100),1);
-                    $inStock = isset($product->stock) ? ($product->stock > 0) : true;
-                @endphp
+    @php
+        // pick the first available image column (img_1, then img_2, then img_3)
+        $imgPath = $product->img_1 ?? $product->img_2 ?? $product->img_3 ?? null;
+        $imgUrl = $imgPath ? Storage::url($imgPath) : 'https://via.placeholder.com/400x300?text=No+image';
 
-                <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="relative">
-                        <a href="{{ route('products.show', $product) }}">
-                            <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="product-image w-full h-48 object-cover">
-                        </a>
+        $discount = $product->discount_percent ?? 0;
+        $finalPrice = $discount > 0 ? ($product->price - ($product->price * $discount / 100)) : $product->price;
+
+        // null-safe vendor name resolution
+        if ($product->vendor) {
+            $vendorName = $product->vendor->business_name
+                ?? $product->vendor->name
+                ?? ($product->vendor->user->name ?? 'Chaka Shop');
+        } else {
+            $vendorName = 'Chaka Shop';
+        }
+
+        $rating = $product->rating ?? number_format(4.4 + (rand(0,40)/100),1);
+        $inStock = isset($product->stock) ? ($product->stock > 0) : true;
+    @endphp
+
+    <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="relative">
+            <a href="{{ route('products.show', $product) }}">
+                <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="product-image w-full h-48 object-cover">
+            </a>
+
+
 
                         @if($discount > 0)
                             <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">-{{ $discount }}%</div>
@@ -844,20 +857,27 @@ html >
     <!-- Featured Products -->
     <section class="py-12 bg-white scroll-reveal">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-  @forelse($featured as $p)
+ @forelse($featured as $p)
     @php
-      $img = ($p->images->first()->path ?? null) ? Storage::url($p->images->first()->path) : 'https://via.placeholder.com/800x500?text=No+image';
-      $discount = $p->discount_percent ?? 0;
-      $final = $discount > 0 ? ($p->price - ($p->price * ($discount / 100))) : $p->price;
-      $rating = $p->rating ?? number_format(4.4 + (rand(0,40)/100),1);
-      $inStock = isset($p->stock) ? ($p->stock > 0) : true;
+        // main image
+        $img = $p->img_1
+            ? Storage::url($p->img_1)
+            : 'https://via.placeholder.com/800x500?text=No+image';
+
+        $discount = $p->discount_percent ?? 0;
+        $final = $discount > 0 ? ($p->price - ($p->price * ($discount / 100))) : $p->price;
+
+        $rating = $p->rating ?? number_format(4.4 + (rand(0,40)/100),1);
+
+        $inStock = isset($p->stock) ? ($p->stock > 0) : true;
     @endphp
 
     <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
-      <div class="relative">
-        <a href="{{ route('products.show', $p) }}">
-          <img src="{{ $img }}" alt="{{ $p->name }}" class="product-image w-full h-48 object-cover">
-        </a>
+        <div class="relative">
+            <a href="{{ route('products.show', $p) }}">
+                <img src="{{ $img }}" alt="{{ $p->name }}" class="product-image w-full h-48 object-cover">
+            </a>
+
 
         @if($discount > 0)
           <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-semibold">-{{ $discount }}%</div>

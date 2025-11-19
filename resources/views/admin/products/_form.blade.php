@@ -50,20 +50,42 @@
     </div>
 
     <div>
-        <label class="block text-sm font-medium">Images (1-5)</label>
-        <input type="file" name="images[]" multiple accept="image/*" class="w-full">
-        <p class="text-xs text-gray-500 mt-1">Uploading new images will append to existing images.</p>
+        <label class="block text-sm font-medium">Images (3 pictures required)</label>
 
-        @if($editing && $product->images->count())
-            <div class="mt-3 flex gap-2 flex-wrap">
-                @foreach($product->images as $img)
-                    <div class="w-20 h-20 rounded overflow-hidden border relative">
-                        <img src="{{ Storage::url($img->path) }}" class="w-full h-full object-cover">
+        <div class="grid grid-cols-3 gap-3 mt-2">
+            <div>
+                <input type="file" name="img_1" accept="image/*" class="w-full">
+                @if($editing && $product->img_1)
+                    <div class="mt-2 w-32 h-32 rounded overflow-hidden border">
+                        <img src="{{ Storage::url($product->img_1) }}" class="w-full h-full object-cover">
                     </div>
-                @endforeach
+                @endif
             </div>
-        @endif
+
+            <div>
+                <input type="file" name="img_2" accept="image/*" class="w-full">
+                @if($editing && $product->img_2)
+                    <div class="mt-2 w-32 h-32 rounded overflow-hidden border">
+                        <img src="{{ Storage::url($product->img_2) }}" class="w-full h-full object-cover">
+                    </div>
+                @endif
+            </div>
+
+            <div>
+                <input type="file" name="img_3" accept="image/*" class="w-full">
+                @if($editing && $product->img_3)
+                    <div class="mt-2 w-32 h-32 rounded overflow-hidden border">
+                        <img src="{{ Storage::url($product->img_3) }}" class="w-full h-full object-cover">
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        <p class="text-xs text-gray-500 mt-2">
+            Upload a file into each slot. On edit, uploading replaces the existing image for that slot.
+        </p>
     </div>
+
 
     <div class="flex items-center gap-4">
         <label class="inline-flex items-center gap-2">

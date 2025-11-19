@@ -118,53 +118,52 @@ public function destroy(Product $product)
     }
 
     public function store(StoreUpdateProductRequest $request)
-    {
-        $vendor = $this->getVendor();
-        if (! $vendor) {
-            return redirect()
-                ->route('vendor.products.index')
-                ->with('error', 'Vendor profile not found.');
-        }
-
-        // Get validated data except images
-        $data = $request->validated();
-        $data['vendor_id'] = $vendor->id;
-
-        // Remove images array from $data so it doesn't interfere with Product::create()
-        if (isset($data['images'])) unset($data['images']);
-
-        // Create the product inside a transaction
-        DB::beginTransaction();
-        try {
-            $product = Product::create($data);
-
-            // Handle multiple images (if any)
-            if ($request->hasFile('images')) {
-                $files = $request->file('images');
-                $existingCount = $product->images()->count();
-                $uploadedCount = count($files);
-
-                if ($existingCount + $uploadedCount > 5) {
-                    DB::rollBack();
-                    return redirect()->back()
-                        ->withErrors(['images' => 'Total images for a product cannot exceed 5.'])
-                        ->withInput();
-                }
-
-                $this->storeImagesForProduct($product, $files);
-            }
-
-            DB::commit();
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            // log if you want: \Log::error($e);
-            return redirect()->back()->with('error', 'Could not create product.')->withInput();
-        }
-
+{
+    $vendor = $this->getVendor();
+    if (! $vendor) {
         return redirect()
             ->route('vendor.products.index')
-            ->with('success', 'Product created.');
+            ->with('error', 'Vendor profile not found.');
     }
+
+    // Get validated data
+    $data = $request->validated();
+    $data['vendor_id'] = $vendor->id;
+
+    // Remove any file inputs from data so create() doesn't try to mass-assign uploaded files
+    $data = Arr::except($data, ['img_1', 'img_2', 'img_3']);
+
+    DB::beginTransaction();
+    try {
+        // create product
+        $product = Product::create($data);
+
+        // store each image if uploaded and set path on the product
+        foreach (['img_1', 'img_2', 'img_3'] as $field) {
+            if ($request->hasFile($field)) {
+                $file = $request->file($field);
+                // store on public disk under products/
+                $path = $file->store('products', 'public');
+                $product->{$field} = $path;
+            }
+        }
+
+        // save if any image was set
+        if ($product->isDirty(['img_1', 'img_2', 'img_3'])) {
+            $product->save();
+        }
+
+        DB::commit();
+    } catch (\Throwable $e) {
+        DB::rollBack();
+        // optionally log: \Log::error($e);
+        return redirect()->back()->with('error', 'Could not create product.')->withInput();
+    }
+
+    return redirect()
+        ->route('vendor.products.index')
+        ->with('success', 'Product created.');
+}
 
 public function update(StoreUpdateProductRequest $request, Product $product)
 {
@@ -175,20 +174,37 @@ public function update(StoreUpdateProductRequest $request, Product $product)
     $data = $request->validated();
     $data['vendor_id'] = $vendor->id;
 
-    // do not mass assign images
-    $updateData = Arr::except($data, ['images']);
+    // Remove file inputs so we don't try to mass assign them
+    $updateData = Arr::except($data, ['img_1', 'img_2', 'img_3']);
 
-    $product->update($updateData);
+    DB::beginTransaction();
+    try {
+        $product->update($updateData);
 
-    if ($request->hasFile('images')) {
-        $existingCount = $product->images()->count();
-        $uploadedCount = count($request->file('images'));
-        if ($existingCount + $uploadedCount > 5) {
-            return redirect()->back()
-                ->withErrors(['images' => 'Total images for a product cannot exceed 5.'])
-                ->withInput();
+        // For each image field: if a new file uploaded, delete old and store new
+        foreach (['img_1', 'img_2', 'img_3'] as $field) {
+            if ($request->hasFile($field)) {
+                // delete old file if exists
+                if ($product->{$field}) {
+                    Storage::disk('public')->delete($product->{$field});
+                }
+
+                $file = $request->file($field);
+                $path = $file->store('products', 'public');
+                $product->{$field} = $path;
+            }
         }
-        $this->storeImagesForProduct($product, $request->file('images'));
+
+        // persist any image changes
+        if ($product->isDirty(['img_1', 'img_2', 'img_3'])) {
+            $product->save();
+        }
+
+        DB::commit();
+    } catch (\Throwable $e) {
+        DB::rollBack();
+        // optionally log: \Log::error($e);
+        return redirect()->back()->with('error', 'Could not update product.')->withInput();
     }
 
     return redirect()->route('vendor.products.index')->with('success','Product updated.');

@@ -135,54 +135,88 @@
     </nav>
 
     <!-- Updated grid layout for better mobile stacking -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
+   @php
+    // Collect available product image paths (img_1..img_3) and convert to public URLs
+    $rawPaths = [
+        $product->img_1 ?? null,
+        $product->img_2 ?? null,
+        $product->img_3 ?? null,
+    ];
+    $paths = array_values(array_filter($rawPaths)); // remove nulls, reindex
+    $imageUrls = collect($paths)->map(fn($p) => $p ? Storage::url($p) : null)->filter()->values()->all();
+    $placeholder = 'https://via.placeholder.com/800x800?text=No+image';
+@endphp
 
-      <!-- Enhanced product images with zoom and interactive gallery -->
-      <div class="animate-fadeInUp">
-        <!-- Made image container mobile-responsive -->
-        <div class="relative aspect-square w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl vibrant-shadow mb-4 sm:mb-6">
-          <!-- Using real product image from Laravel -->
-          <img id="mainImage"
-               src="{{ $product->images->first()->url ?? '/placeholder.svg?height=600&width=600' }}"
-               alt="{{ $product->name }}"
-               class="object-cover w-full h-full image-zoom transition-all duration-500">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12">
 
-          <!-- Made overlay buttons mobile-friendly -->
-          <div class="absolute top-2 sm:top-4 right-2 sm:right-4 flex flex-col gap-2">
-            <button class="bg-white/80 backdrop-blur-sm p-2 sm:p-2 rounded-full shadow-lg hover:bg-white transition-all duration-300 group min-h-[44px] min-w-[44px] flex items-center justify-center">
-              <i class="fas fa-heart text-gray-600 group-hover:text-red-500 transition-colors"></i>
-            </button>
-            <button class="bg-white/80 backdrop-blur-sm p-2 sm:p-2 rounded-full shadow-lg hover:bg-white transition-all duration-300 group min-h-[44px] min-w-[44px] flex items-center justify-center">
-              <i class="fas fa-share-alt text-gray-600 group-hover:text-blue-500 transition-colors"></i>
-            </button>
-          </div>
+  <!-- Enhanced product images with gallery + swipe -->
+  <div class="animate-fadeInUp">
+    <div class="relative aspect-square w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl vibrant-shadow mb-4 sm:mb-6">
+      <!-- Main image: data-images holds the JSON list of urls for JS -->
+      <img
+        id="mainImage"
+        src="{{ $imageUrls[0] ?? $placeholder }}"
+        alt="{{ $product->name }}"
+        data-images='@json($imageUrls)'
+        class="object-cover w-full h-full image-zoom transition-all duration-300"
+        draggable="false"
+      >
 
-          <!-- Using real discount percentage -->
-          @if($product->discount_percent > 0)
-          <!-- Made discount badge mobile-responsive -->
-          <div class="absolute top-2 sm:top-4 left-2 sm:left-4">
-            <span class="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold animate-pulse-custom">
-              -{{ $product->discount_percent }}% OFF
-            </span>
-          </div>
-          @endif
-        </div>
+      <!-- Prev / Next arrow buttons -->
+      @if(count($imageUrls) > 1)
+        <button id="prevBtn" aria-label="Previous image"
+            class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white transition duration-200">
+            <i class="fas fa-chevron-left text-lg"></i>
+        </button>
 
-        <!-- Using real product images for thumbnail gallery -->
-        @if($product->images->count() > 1)
-        <!-- Made thumbnail gallery mobile-responsive -->
-        <div class="flex gap-2 sm:gap-3 justify-center overflow-x-auto pb-2">
-          @foreach($product->images->take(4) as $img)
-          <img onclick="changeMainImage('{{ $img->url }}')"
-               src="{{ $img->url }}"
-               class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl object-cover border-2 border-transparent hover:border-orange-400 cursor-pointer transition-all duration-300 hover:scale-105 shadow-md flex-shrink-0">
-          @endforeach
-        </div>
-        @endif
+        <button id="nextBtn" aria-label="Next image"
+            class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white transition duration-200">
+            <i class="fas fa-chevron-right text-lg"></i>
+        </button>
+      @endif
+
+      <!-- small overlay action buttons -->
+      <div class="absolute top-2 sm:top-4 right-2 sm:right-4 flex flex-col gap-2 z-10">
+        <button class="bg-white/80 ... p-2 rounded-full shadow-lg" type="button"><i class="fas fa-heart text-gray-600"></i></button>
+        <button class="bg-white/80 ... p-2 rounded-full shadow-lg" type="button"><i class="fas fa-share-alt text-gray-600"></i></button>
       </div>
 
-      <!-- Enhanced product info with interactive elements -->
-      <div class="flex flex-col justify-between animate-fadeInUp" style="animation-delay: 0.2s;">
+      @if($product->discount_percent > 0)
+        <div class="absolute top-2 sm:top-4 left-2 sm:left-4 z-10">
+          <span class="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
+            -{{ $product->discount_percent }}% OFF
+          </span>
+        </div>
+      @endif
+    </div>
+
+    <!-- Thumbnail gallery (shows when there is > 1 image) -->
+    @if(count($imageUrls) > 0)
+      <div id="thumbs" class="flex gap-2 sm:gap-3 justify-center overflow-x-auto pb-2">
+        @forelse($imageUrls as $i => $url)
+          <button
+            type="button"
+            class="thumb-btn w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl object-cover border-2 border-transparent hover:scale-105 transition-transform shadow-md flex-shrink-0 p-0"
+            data-url="{{ $url }}"
+            data-index="{{ $i }}"
+            aria-label="Show image {{ $i + 1 }}"
+            style="background-image: url('{{ $url }}'); background-size: cover; background-position: center;"
+          >
+            {{-- empty - using background-image for full-cover thumbnail --}}
+          </button>
+        @empty
+          <div class="w-32 h-32 rounded overflow-hidden border flex items-center justify-center">
+            <img src="{{ $placeholder }}" alt="No image" class="w-full h-full object-cover">
+          </div>
+        @endforelse
+      </div>
+    @endif
+
+  </div>
+
+  <!-- Product info column (unchanged) -->
+  <div>
+   <div class="flex flex-col justify-between animate-fadeInUp" style="animation-delay: 0.2s;">
         <div>
           <!-- Made badges mobile-responsive -->
           <div class="flex items-center gap-2 sm:gap-3 mb-4 flex-wrap">
@@ -203,7 +237,7 @@
           <div class="text-sm sm:text-base text-gray-600 mb-4 flex flex-col sm:flex-row sm:items-center gap-2">
             <div class="flex items-center">
               <i class="fas fa-store mr-2 text-orange-500"></i>
-              Sold by: <span class="font-medium text-orange-700 ml-1">{{ $product->vendor->name ?? 'Unknown Vendor' }}</span>
+              Sold by: <span class="font-medium text-orange-700 ml-1">{{ $product->vendor->name ?? 'Chaka Shop' }}</span>
             </div>
             <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs self-start sm:ml-3">Verified Seller</span>
           </div>
@@ -404,6 +438,96 @@
 
         </div>
       </div>
+  </div>
+</div>
+
+<!-- Gallery JS: click thumbnails, arrows, keyboard, and touch swipe -->
+<script>
+  (function () {
+    const main = document.getElementById('mainImage');
+    if (!main) return;
+
+    const placeholder = '{{ $placeholder }}';
+    const images = JSON.parse(main.dataset.images || '[]'); // array of URLs
+    let currentIndex = 0;
+
+    // init index if images array non-empty and main src present
+    if (images.length) {
+      const initialSrc = main.getAttribute('src');
+      const idx = images.indexOf(initialSrc);
+      currentIndex = idx >= 0 ? idx : 0;
+    }
+
+    const setMain = (index) => {
+      if (!images.length) {
+        main.src = placeholder;
+        return;
+      }
+      currentIndex = ((index % images.length) + images.length) % images.length; // wrap
+      main.src = images[currentIndex];
+      updateActiveThumb();
+    };
+
+    // thumbnails click
+    document.querySelectorAll('#thumbs .thumb-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const url = btn.dataset.url;
+        const idx = parseInt(btn.dataset.index, 10);
+        setMain(idx);
+      });
+    });
+
+    // prev/next buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    if (prevBtn) prevBtn.addEventListener('click', () => setMain(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => setMain(currentIndex + 1));
+
+    // keyboard support
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') setMain(currentIndex - 1);
+      if (e.key === 'ArrowRight') setMain(currentIndex + 1);
+    });
+
+    // touch swipe support
+    let startX = 0;
+    let startY = 0;
+    const threshold = 40; // px
+
+    main.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+    }, { passive: true });
+
+    main.addEventListener('touchend', (e) => {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > threshold) {
+        if (dx < 0) setMain(currentIndex + 1); // swipe left -> next
+        else setMain(currentIndex - 1); // swipe right -> prev
+      }
+    });
+
+    // highlight active thumbnail
+    function updateActiveThumb() {
+      document.querySelectorAll('#thumbs .thumb-btn').forEach(btn => {
+        btn.classList.remove('ring-2', 'ring-orange-400', 'border-orange-400');
+        const idx = parseInt(btn.dataset.index, 10);
+        if (idx === currentIndex) {
+          btn.classList.add('ring-2', 'ring-orange-400', 'border-orange-400');
+        }
+      });
+    }
+
+    // init
+    setMain(currentIndex);
+  })();
+</script>
+
+      <!-- Enhanced product info with interactive elements -->
+
     </div>
 
 
@@ -411,31 +535,46 @@
     <!-- Added vibrant, animated related products section -->
     @if(isset($relatedProducts) && $relatedProducts->isNotEmpty())
     <section class="mt-12 sm:mt-16 animate-fadeInUp" style="animation-delay: 0.6s;">
-      <div class="text-center mb-8 sm:mb-12">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">You Might Also Like</h2>
-        <div class="w-24 h-1 bg-gradient-to-r from-orange-400 to-yellow-400 mx-auto rounded-full"></div>
-      </div>
+        <div class="text-center mb-8 sm:mb-12">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">You Might Also Like</h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-orange-400 to-yellow-400 mx-auto rounded-full"></div>
+        </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        @foreach($relatedProducts as $rp)
-          @php
-            $img = optional($rp->images->first())->path ? Storage::url($rp->images->first()->path) : '/placeholder.svg?height=300&width=300';
-            $discount = $rp->discount_percent ?? 0;
-            $final = $discount > 0 ? ($rp->price - ($rp->price * ($discount/100))) : $rp->price;
-            $vendorName = $rp->vendor->business_name ?? ($rp->vendor->user->name ?? 'Vendor');
-          @endphp
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            @foreach($relatedProducts as $rp)
+                @php
+                    // pick first available image from new columns
+                    $imgPath = $rp->img_1 ?? $rp->img_2 ?? $rp->img_3 ?? null;
+                    $img     = $imgPath ? Storage::url($imgPath)
+                                        : '/placeholder.svg?height=300&width=300';
 
-          <div class="group bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-white/20">
-            <!-- Product Image with Overlay -->
-            <div class="relative overflow-hidden">
-              <a href="{{ route('products.show', $rp->id) }}" class="block">
-                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
-                  <img src="{{ $img }}"
-                       alt="{{ $rp->name }}"
-                       class="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-2">
-                </div>
-              </a>
+                    $discount = $rp->discount_percent ?? 0;
+                    $final    = $discount > 0
+                                ? ($rp->price - ($rp->price * ($discount / 100)))
+                                : $rp->price;
 
+                    // safe vendor name
+                    if ($rp->vendor) {
+                        $vendorName = $rp->vendor->business_name
+                                      ?? $rp->vendor->name
+                                      ?? ($rp->vendor->user->name ?? 'Vendor');
+                    } else {
+                        $vendorName = 'Vendor';
+                    }
+                @endphp
+
+                <div class="group bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg
+                            hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-white/20">
+
+                    <!-- Product Image -->
+                    <div class="relative overflow-hidden">
+                        <a href="{{ route('products.show', $rp->id) }}" class="block">
+                            <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+                                <img src="{{ $img }}"
+                                     alt="{{ $rp->name }}"
+                                     class="w-full h-full object-cover transform transition-all duration-700 group-hover:scale-110 group-hover:rotate-2">
+                            </div>
+                        </a>
               <!-- Discount Badge -->
               @if($discount > 0)
               <div class="absolute top-2 left-2">

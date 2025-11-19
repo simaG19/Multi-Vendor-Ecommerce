@@ -187,16 +187,24 @@
                 <!-- Product Image -->
                 <div class="relative mb-4">
                     <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl overflow-hidden">
-                        @if($p->images->first())
-                            <img src="{{ \Storage::url($p->images->first()->path) }}" alt="{{ $p->name }}" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center">
-                                <div class="text-center">
-                                    <i class="fas fa-image text-gray-400 text-3xl mb-2"></i>
-                                    <div class="text-sm text-gray-400">No image</div>
-                                </div>
-                            </div>
-                        @endif
+                        @php
+    // use img_1 as main image
+    $mainImage = $p->img_1
+        ? Storage::url($p->img_1)
+        : null;
+@endphp
+
+@if($mainImage)
+    <img src="{{ $mainImage }}" alt="{{ $p->name }}" class="w-full h-full object-cover">
+@else
+    <div class="w-full h-full flex items-center justify-center">
+        <div class="text-center">
+            <i class="fas fa-image text-gray-400 text-3xl mb-2"></i>
+            <div class="text-sm text-gray-400">No image</div>
+        </div>
+    </div>
+@endif
+
                     </div>
                     <!-- Price Badge -->
                     <div class="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold">

@@ -169,40 +169,69 @@
         <!-- Create Product Form -->
         <div class="glass-effect rounded-2xl p-8">
             <!-- Fixed form action to include vendor parameter -->
-            <form action="{{ route('vendor.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-                @csrf
-@method('POST')   {{-- or @method('PUT') on edit --}}
-<input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
+      <form action="{{ route('vendor.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    @csrf
+    @method('POST')
 
-                <!-- Product Name -->
-                <div class="form-field">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-tag mr-2 text-orange-600"></i>Product Name *
-                    </label>
-                    <input type="text"
-                           name="name"
-                           value="{{ old('name') }}"
-                           class="form-input w-full px-4 py-3 rounded-lg focus:outline-none"
-                           placeholder="Enter product name"
-                           required>
-                </div>
+    <input type="hidden" name="vendor_id" value="{{ $vendor->id }}">
 
-                <!-- Product Images -->
-               <div class="form-field">
-  <label class="block text-sm font-medium text-gray-700 mb-2">
-    <i class="fas fa-images mr-2 text-orange-600"></i>Product Images (1-5 images)
-  </label>
+    <!-- Product Name -->
+    <div class="form-field">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            <i class="fas fa-tag mr-2 text-orange-600"></i>Product Name *
+        </label>
+        <input type="text"
+               name="name"
+               value="{{ old('name') }}"
+               class="form-input w-full px-4 py-3 rounded-lg focus:outline-none"
+               placeholder="Enter product name"
+               required>
+    </div>
 
-  <input type="file" name="images[]" id="imageUpload" multiple accept="image/*" class="block w-full text-sm text-gray-700" />
-  <p id="selectedFiles" class="mt-2 text-sm text-gray-600"></p>
+    <!-- Product Images (3 required) -->
+    <div class="form-field">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            <i class="fas fa-images mr-2 text-orange-600"></i>Product Images (3 Required)
+        </label>
 
-  <script>
-    document.getElementById('imageUpload').addEventListener('change', function(e){
-      const list = Array.from(e.target.files).map(f => f.name).join(', ');
-      document.getElementById('selectedFiles').textContent = list ? 'Selected: ' + list : '';
-    });
-  </script>
-</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+            <!-- Image 1 -->
+            <div>
+                <label class="text-sm text-gray-600 mb-1 block">Image 1 *</label>
+                <input type="file"
+                       name="img_1"
+                       accept="image/*"
+                       required
+                       class="block w-full text-sm text-gray-700" />
+            </div>
+
+            <!-- Image 2 -->
+            <div>
+                <label class="text-sm text-gray-600 mb-1 block">Image 2 *</label>
+                <input type="file"
+                       name="img_2"
+                       accept="image/*"
+                       required
+                       class="block w-full text-sm text-gray-700" />
+            </div>
+
+            <!-- Image 3 -->
+            <div>
+                <label class="text-sm text-gray-600 mb-1 block">Image 3 *</label>
+                <input type="file"
+                       name="img_3"
+                       accept="image/*"
+                       required
+                       class="block w-full text-sm text-gray-700" />
+            </div>
+
+        </div>
+
+        <p class="mt-2 text-sm text-gray-600">
+            Upload exactly 3 product images. These will appear in the gallery/swiper.
+        </p>
+    </div>
 
 
                 <!-- SKU and Brand Row -->

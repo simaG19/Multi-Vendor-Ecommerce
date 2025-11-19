@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
+
 class ProductController extends Controller
 {
 
@@ -49,10 +51,8 @@ public function store(StoreProductRequest $request)
 {
     $data = $request->validated();
 
-    // mark admin creator
     $data['created_by'] = auth()->id();
 
-    // If current user is admin, ensure vendor_id is null (admin-owned product)
     $user = auth()->user();
     $isAdmin = (isset($user->role) && strtolower($user->role) === 'admin') || (isset($user->is_admin) && $user->is_admin);
     if ($isAdmin) {
@@ -61,33 +61,45 @@ public function store(StoreProductRequest $request)
 
     $data['is_active'] = $request->has('is_active') ? boolval($request->is_active) : true;
 
-    $product = Product::create($data);
-
-    if ($request->hasFile('images')) {
-        $this->storeImagesForProduct($product, $request->file('images'));
+    // store images and set paths into $data
+    foreach (['img_1','img_2','img_3'] as $field) {
+        if ($request->hasFile($field)) {
+            $file = $request->file($field);
+            $data[$field] = $file->store('products', 'public'); // stores in storage/app/public/products
+        }
     }
+
+    $product = Product::create($data);
 
     return redirect()->route('admin.products.index')->with('success', 'Product created.');
 }
 
-
+// update
 public function update(StoreProductRequest $request, Product $product)
 {
     $data = $request->validated();
-    $data['is_active'] = $request->has('is_active') ? boolval($request->is_active) : false;
 
-    // record admin who last updated / edited the product (optional)
-    $data['created_by'] = Auth::id();
+    $data['is_active'] = $request->has('is_active') ? boolval($request->is_active) : $product->is_active;
+
+    // If new images uploaded, delete old ones and store new
+    foreach (['img_1','img_2','img_3'] as $field) {
+        if ($request->hasFile($field)) {
+            // delete existing file if present
+            if ($product->{$field}) {
+                Storage::disk('public')->delete($product->{$field});
+            }
+            $file = $request->file($field);
+            $data[$field] = $file->store('products', 'public');
+        } else {
+            // keep existing value if not replaced
+            unset($data[$field]); // ensure Product::update doesn't null it
+        }
+    }
 
     $product->update($data);
 
-    if ($request->hasFile('images')) {
-        $this->storeImagesForProduct($product, $request->file('images'));
-    }
-
-    return redirect()->route('admin.products.index')->with('success','Product updated.');
+    return redirect()->route('admin.products.index')->with('success', 'Product updated.');
 }
-
 
     public function edit(Product $product)
     {

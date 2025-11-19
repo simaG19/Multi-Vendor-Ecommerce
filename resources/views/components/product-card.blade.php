@@ -1,7 +1,6 @@
 @props(['product'])
 
 <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden group">
-    {{-- route: pass model or id (works with route-model-binding or id-based route) --}}
     <a href="{{ route('products.show', $product) }}" class="block">
         <div class="relative">
             @if(!empty($product->discount_percent) && $product->discount_percent > 0)
@@ -12,10 +11,10 @@
 
             <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
                 @php
-                    // try common attributes in order: accessor 'url' or 'getUrlAttribute', 'path', 'image_path'
-                    $imgModel = optional($product->images->first());
-                    $imgPath = $imgModel->path ?? $imgModel->image_path ?? null;
+                    // pick first available image from the three columns
+                    $imgPath = $product->img_1 ?? $product->img_2 ?? $product->img_3 ?? null;
                     $imgUrl = $imgPath ? \Illuminate\Support\Facades\Storage::url($imgPath) : null;
+                    $placeholder = '/placeholder.svg?height=200&width=200';
                 @endphp
 
                 @if($imgUrl)
@@ -24,8 +23,8 @@
                          loading="lazy"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 @else
-                    <img src="/placeholder.svg?height=200&width=200"
-                         alt="{{ $product->name }}"
+                    <img src="{{ $placeholder }}"
+                         alt="No image for {{ $product->name }}"
                          loading="lazy"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                 @endif
@@ -51,8 +50,19 @@
                 @endif
             </div>
 
-            @if($product->vendor)
-                <p class="text-xs text-gray-400">by {{ $product->vendor->business_name ?? $product->vendor->user->name ?? 'Vendor' }}</p>
+            @php
+                // safer vendor resolution
+                if ($product->vendor) {
+                    $vendorName = $product->vendor->business_name
+                        ?? $product->vendor->name
+                        ?? ($product->vendor->user->name ?? 'Vendor');
+                } else {
+                    $vendorName = 'Vendor';
+                }
+            @endphp
+
+            @if($vendorName)
+                <p class="text-xs text-gray-400">by {{ $vendorName }}</p>
             @endif
         </div>
     </a>

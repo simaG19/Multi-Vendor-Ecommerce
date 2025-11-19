@@ -173,18 +173,26 @@
                 @foreach($products as $p)
                     <div class="product-card glass-effect rounded-2xl p-6 hover:shadow-xl">
                         <!-- Product Image -->
-                        <div class="relative mb-4">
-                            <div class="w-full h-48 bg-gray-100 rounded-xl overflow-hidden">
-                                @if($p->images->isNotEmpty())
-                                    <img src="{{ asset('storage/'.$p->images->first()->path) }}"
-                                         alt="{{ $p->name }}"
-                                         class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                                        <i class="fas fa-image text-gray-400 text-3xl"></i>
-                                    </div>
-                                @endif
-                            </div>
+<div class="relative mb-4">
+    <div class="w-full h-48 bg-gray-100 rounded-xl overflow-hidden">
+
+        @php
+            $firstImage = $p->img_1 ?? $p->img_2 ?? $p->img_3;
+        @endphp
+
+        @if($firstImage)
+            <img src="{{ asset('storage/' . $firstImage) }}"
+                 alt="{{ $p->name }}"
+                 class="w-full h-full object-cover">
+        @else
+            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                <i class="fas fa-image text-gray-400 text-3xl"></i>
+            </div>
+        @endif
+
+    </div>
+
+
 
                             <!-- Status Badge -->
                             <div class="absolute top-3 right-3">
